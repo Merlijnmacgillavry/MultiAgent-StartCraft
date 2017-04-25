@@ -1,0 +1,10 @@
+use TerranSCV as actionspec.
+use TerranSCV as knowledge.
+exit = nogoals.
+order = linearrandom. % ensure we gather a random mineral field each time.
+
+module main{	
+	% If we need to gather minerals, and we're not doing anything, start gathering minerals.
+	if goal(gathered(Id)), bel(workerActivity(idling)) then gather(Id).
+	
+}

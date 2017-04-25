@@ -1,0 +1,22 @@
+use TerranCommandCenter as knowledge.
+use TerranCommandcenter as actionspec.
+
+module TerranCommandCenterEvent {	
+	% DO NOT REMOVE OR MODIFY THE TWO RULES BELOW
+	forall bel(friendly(Type,Id,Conditions)), not(percept(friendly(Type,Id,Conditions))) do delete(friendly(Type,Id,Conditions)).	
+	forall percept(friendly(Type,Id,Conditions)), not(bel(friendly(Type,Id,Conditions))) do insert(friendly(Type,Id,Conditions)).
+	
+	forall percept(friendly("Terran SCV", A,_)) do {
+		if not(bel(unit("Terran SCV", A))), bel(scvAmount(P), L is (P+1))
+			then insert(unit("Terran SCV", A))
+			+ delete(scvAmount(P))
+			+ insert(scvAmount(L)) + print(L + "unit:" + A).
+	}
+	
+	%update minerals
+	if percept(resources(Mnew, Gnew, Csnew, Tsnew)), bel(resources(M, G , Cs, Ts), resources(M, G, Cs, Ts) \= resources(Mnew, Gnew, Csnew, Tsnew))
+		then delete(resources(M, G , Cs, Ts)) + insert (resources(Mnew, Gnew, Csnew, Tsnew)).
+	
+	
+	if bel(resources(M, _,_,_), scvCost(X), M>X, amountMax(A), scvAmount(B), A>B ) then adopt(train("Terran SCV")).	
+}

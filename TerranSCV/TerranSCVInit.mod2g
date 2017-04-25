@@ -1,0 +1,9 @@
+ use TerranSCV as knowledge.
+
+module TerranSCVInit {
+	% Store our own identifier and initial state (updated in event).
+	if percept(self(Id,_,_,_,_)), percept(workerActivity(Activity)) then insert(self(Id), workerActivity(Activity)).
+	% Initial storage of the mineral field identifiers (amounts are updated in event).
+	% Also adopt the goal to fully mine each mineral field.
+	forall percept(mineralField(Id,Amount,_,_,_)) do insert(mineralField(Id,Amount)) + adopt(gathered(Id)).
+}

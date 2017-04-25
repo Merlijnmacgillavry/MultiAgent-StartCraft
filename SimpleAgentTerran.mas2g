@@ -1,0 +1,34 @@
+use "StarCraft Connector.jar" as environment with
+	map="(2)Destination.scx",
+	own_race="Terran",
+	starcraft_location="C:\Starcraft",
+	auto_menu="Single_Player",
+	enemy_race="random",
+	debug="true", % launch the developer tool
+	invulnerable="true", % individual assignment only
+	game_speed=50. % default tournament speed
+
+% DO NOT REMOVE OR CHANGE THIS AGENT DEFINITION
+% Defines an agent for the player's main base
+define mainBase as agent {
+	% you can add an init module here if needed
+	use TerranCommandCenter.TerranCommandCenterInit as init module.
+	use TerranCommandCenter.TerranCommandCenter as main module.
+		use TerranCommandCenter.TerranCommandCenterEvent as event module.
+
+}
+
+% Define a worker drone agent
+define terranSCV as agent {
+	use TerranSCV.TerranSCVInit as init module.
+	use TerranSCV.TerranSCV as main module.
+	use TerranSCV.TerranSCVEvent as event module.
+} 
+
+launchpolicy{
+	% DO NOT REMOVE THIS LAUNCH RULE
+	% Launch an agent for the main base
+	when type = terranCommandCenter launch mainBase.
+	% Launch a SCV agent for each worker
+	when type = terranSCV launch terranSCV.
+}
