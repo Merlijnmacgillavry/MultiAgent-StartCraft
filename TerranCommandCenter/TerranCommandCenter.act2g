@@ -2,5 +2,4 @@ use TerranCommandCenter as knowledge.
 
 define train(Type) with
 	pre{}
-
 	post{ }

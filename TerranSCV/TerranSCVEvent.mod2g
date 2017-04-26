@@ -5,14 +5,20 @@ module TerranSCVEvent {
 	% Amount is always >1, as mineralFields dissapear from the game when empty.
 	forall bel(mineralField(Id,Amount)), not(percept(mineralField(Id,Amount,_,_,_))) do delete(mineralField(Id,Amount)).
 	forall percept(mineralField(Id,Amount,_,_,_)), not(bel(mineralField(Id,Amount))) do insert(mineralField(Id,Amount)).
-	
+	% The handling of the vespinegeyser percepts (update amounts).
+	% Amount is always >1, as vespineGeysers dissapear from the game when empty.
+	forall bel(vespineGeyser(Id,Amount,X,Y)), not(percept(vespineGeyser(Id,Amount,_,X,Y))) do delete(vespineGeyser(Id,Amount,X,Y)).
+	forall percept(vespineGeyser(Id,Amount,_,X,Y)), not(bel(vespineGeyser(Id,Amount,X,Y))) do insert(vespineGeyser(Id,Amount,X,Y)).
 	% The handling of the workerActivity percept
 	if percept(workerActivity(NewActivity)), bel(workerActivity(OldActivity), NewActivity \= OldActivity) 
 	then delete(workerActivity(OldActivity)) + insert(workerActivity(NewActivity)).
 	
 	% Check the gathered goals
 	if goal(gathered(Id)), not(bel(mineralField(Id,_))) then insert(gathered(Id)).
+	% Check the refinaryBuild goals.
+	if goal(refinaryBuild(Id,X,Y)), not(bel(vespineGeyser(Id,Amount,X,Y))) then insert(refinaryBuild(Id,X,Y)).
 	
+	%resource update(update amounts)
 	if percept(resources(M, G, Cs, Ts)) then insert (resources(M, G, Cs, Ts)).
 	if percept(resources(Mnew, Gnew, Csnew, Tsnew)), bel(resources(M, G , Cs, Ts), Mnew \= M ,Gnew \= G, Csnew \= Cs, Tsnew \= Ts)
 		then delete(resources(M, G , Cs, Ts)) + insert (resources(Mnew, Gnew, Csnew, Tsnew)).

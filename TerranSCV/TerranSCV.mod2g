@@ -6,5 +6,5 @@ order = linearrandom. % ensure we gather a random mineral field each time.
 module main{	
 	% If we need to gather minerals, and we're not doing anything, start gathering minerals.
 	if goal(gathered(Id)), bel(workerActivity(idling)) then gather(Id).
-	
+	if goal(refinaryBuild(Id,X,Y)), bel(workerActivity(idling)) then build(Id,X,Y).
 }
