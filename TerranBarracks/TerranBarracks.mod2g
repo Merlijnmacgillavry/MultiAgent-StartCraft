@@ -1,0 +1,8 @@
+use TerranBarracks as actionspec.
+use TerranBarracks as knowledge.
+exit = never.
+
+
+module TerranBarracks {
+	if bel(trained) then train("Terran Marine") + delete(trained).
+}

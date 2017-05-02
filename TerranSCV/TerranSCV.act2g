@@ -5,7 +5,10 @@ use TerranSCV as knowledge.
 define gather(Id) with
 	pre { not(gathered(Id)) }
 	post { true }
-	
+%the build action
 define build(Type, X, Y)with
 	pre {true}
 	post {true}
+define stop with
+	pre{true}
+	post{true}

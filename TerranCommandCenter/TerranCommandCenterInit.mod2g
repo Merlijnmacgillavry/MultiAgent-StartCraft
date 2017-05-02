@@ -3,5 +3,6 @@ use TerranCommandCenter as knowledge.
 module TerranCommandCenterInit {
 	if percept(resources(M, G, Cs, Ts)) then insert (resources(M, G, Cs, Ts)).
 	if true then insert(scvAmount(0)).
-	if true then insert(amountMax(9)).
+	if true then insert(amountMax(7)).
+	if percept(queueSize(Size)) then insert(queueSize(Size)).
 }

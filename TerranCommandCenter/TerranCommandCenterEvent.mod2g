@@ -5,18 +5,26 @@ module TerranCommandCenterEvent {
 	% DO NOT REMOVE OR MODIFY THE TWO RULES BELOW
 	forall bel(friendly(Type,Id,Conditions)), not(percept(friendly(Type,Id,Conditions))) do delete(friendly(Type,Id,Conditions)).	
 	forall percept(friendly(Type,Id,Conditions)), not(bel(friendly(Type,Id,Conditions))) do insert(friendly(Type,Id,Conditions)).
-	
-	forall percept(friendly("Terran SCV", A,_)) do {
-		if not(bel(unit("Terran SCV", A))), bel(scvAmount(P), L is (P+1))
-			then insert(unit("Terran SCV", A))
-			+ delete(scvAmount(P))
-			+ insert(scvAmount(L)) + print(L + "unit:" + A).
-	}
-	
+
 	%update minerals
 	if percept(resources(Mnew, Gnew, Csnew, Tsnew)), bel(resources(M, G , Cs, Ts), resources(M, G, Cs, Ts) \= resources(Mnew, Gnew, Csnew, Tsnew))
 		then delete(resources(M, G , Cs, Ts)) + insert (resources(Mnew, Gnew, Csnew, Tsnew)).
+	%ypdate queusize
+	if percept(queueSize(A)), bel(queueSize(B)) 
+	then delete(queueSize(B)) + insert(queueSize(A)).
+	if bel(queueSize(0), scvAmount(Y), amountMax(N), Y<N, resources(M,_,Amount,Max), Amount\=Max, scvCost(A), M>=A) then insert(train).
 	
+	%message handling
 	
-	if bel(resources(M, _,_,_), scvCost(X), M>X, amountMax(A), scvAmount(B), A>B ) then adopt(train("Terran SCV")).	
+	if bel(resources(M,_,_,_),barrackCost(X), M>X), not(percept(friendly('Terran Barracks', _, _)))
+	then (terranSCV_0).send(assigned(2)).
+	if bel(resources(M,_,_,_),barrackCost(X), M>X), not(percept(friendly('Terran Barracks', _, _)))
+	then (terranSCV_3).send(assigned(2)).
+	if bel(resources(M,_,_,_),supplyCost(X), M>X), not(percept(friendly('Terran Supply Depot',_,_)))
+	then (terranSCV_1).send(assigned(3)).
+	if bel(resources(M,_,_,_),supplyCost(X), M>X), percept(friendly('Terran Supply Depot',_,_))
+	then (terranSCV_2).send(assigned(4)).
+	if bel(resources(M,_,Amount,Max), M>100), not(percept(friendly('Terran Refinery'))) then (terranSCV).send(assigned(1)).
+	%if bel(resources(M,G,Amount,Max), G<100), percept(friendly('Terran Refinery')) then (terranSCV_5).send(assigned(5)).
+	%if bel(resources(M,G,Amount,Max), G<100), percept(friendly('Terran Refinery')) then (terranSCV_6).send(assigned(5)).
 }
