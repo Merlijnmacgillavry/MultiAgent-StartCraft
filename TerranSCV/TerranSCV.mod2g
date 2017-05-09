@@ -4,7 +4,13 @@ exit = nogoals.
 order = linearrandom. % ensure we gather a random mineral field each time.
 
 module main{	
+	if goal(build(Type,X,Y)) then build(Type,X,Y).
+	%if we need to gather gas, and we're not doing anything then gas
+	if goal(gasGathered(Id)), bel(workerActivity(idling)), not(bel(supplyMax2)) then gather(Id).
 	% If we need to gather minerals, and we're not doing anything, start gathering minerals.
 	if goal(gathered(Id)), bel(workerActivity(idling)) then gather(Id).
-	
+	% if we need to gather minerals and we're not doing anything start buildin a refinary'
+	if goal(refinaryBuild(Id,X,Y)),bel(assigned(1)) then build("Terran Refinery",X,Y).
+	if goal(barrackBuild(X,Y)), bel(assigned(2)), not(bel(barrack)) then build('Terran Barracks',X,Y).
+	if a-goal(depotBuild(X,Y)), bel(assigned(3)), not(bel(supplyMax1)) then build('Terran Supply Depot',X,Y ).
 }

@@ -1,6 +1,5 @@
 use TerranCommandCenter as knowledge.
 
 define train(Type) with
-	pre{}
-
-	post{ }
+	pre{ scvAmount(A), B is A+1, queueSize(0)}
+	post{ not(scvAmount(A)), scvAmount(B), not(queueSize(0)), queueSize(1) }

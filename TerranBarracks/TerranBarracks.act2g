@@ -1,0 +1,7 @@
+use TerranBarracks as knowledge.
+
+
+define train(Id) with
+	pre{marinesAmount(X), Y is X+1, queueSize(0) }
+	post{not(marinesAmount(X)), marinesAmount(Y), not(queueSize(0)), queueSize(1) }
+	

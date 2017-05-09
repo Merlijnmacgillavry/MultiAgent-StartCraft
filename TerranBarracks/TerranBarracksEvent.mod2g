@@ -1,0 +1,15 @@
+use TerranBarracks as knowledge.
+
+module TerranBarracksEvent {
+	forall bel(friendly(Type,Id,Conditions)), not(percept(friendly(Type,Id,Conditions))) do delete(friendly(Type,Id,Conditions)).	
+	forall percept(friendly(Type,Id,Conditions)), not(bel(friendly(Type,Id,Conditions))) do insert(friendly(Type,Id,Conditions)).
+	
+	if percept(resources(Mnew, Gnew, Csnew, Tsnew)), bel(resources(M, G, Cs, Ts)) 
+		then delete(resources(M, G, Cs, Ts)) + insert(resources(Mnew, Gnew, Csnew, Tsnew)).
+
+	if percept(queueSize(NewSize)), bel(queueSize(Size))
+	  then delete(queueSize(Size)) + insert(queueSize(NewSize)).
+	  
+	if bel( queueSize(0), marinesAmount(Y), marinesMax(N), Y<N, resources(M, _, Cs, Ts), Cs \= Ts, cost(X), M>=X)
+	 then insert(trained).
+}

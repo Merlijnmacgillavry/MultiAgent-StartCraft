@@ -1,9 +1,10 @@
 use TerranCommandCenter as knowledge.
 use TerranCommandCenter as actionspec.
 
+exit = never.
 module TerranCommandCenter {
 	% HACK to have at least something here: you may remove this when using the agent.
 	if percept(winner) then print("Winner!").
 	
-	if a-goal(train(Type)) then train(Type) + drop(train(Type)).
+	if bel(train) then train("Terran SCV") + delete(train).
 }
