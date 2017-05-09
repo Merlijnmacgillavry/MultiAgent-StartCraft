@@ -1,5 +1,5 @@
 use TerranCommandCenter as knowledge.
-
+%initialize al the basic percepts and say the begin amount of scvs is 0 and the max that this command center makes is 7
 module TerranCommandCenterInit {
 	if percept(resources(M, G, Cs, Ts)) then insert (resources(M, G, Cs, Ts)).
 	if true then insert(scvAmount(0)).

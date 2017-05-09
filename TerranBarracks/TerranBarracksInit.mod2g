@@ -1,8 +1,9 @@
 use TerranBarracks as knowledge.
-
+%initialize all the base percepts.
 module TerranBarracksInit {
 	if percept(resources(M, G, Cs, Ts)) then insert(resources(M, G, Cs, Ts)).
+	if percept(queueSize(Size)) then insert(queueSize(Size)).
 	if true then insert(marinesAmount(0)).
 	if true then insert(marinesMax(10)).
-	if percept(queueSize(Size)) then insert(queueSize(Size)).
+	
 }

@@ -5,6 +5,6 @@ exit = never.
 module TerranCommandCenter {
 	% HACK to have at least something here: you may remove this when using the agent.
 	if percept(winner) then print("Winner!").
-	
+	% if bel train scv then a terran scv 
 	if bel(train) then train("Terran SCV") + delete(train).
 }

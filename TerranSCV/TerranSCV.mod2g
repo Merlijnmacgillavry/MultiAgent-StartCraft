@@ -11,6 +11,8 @@ module main{
 	if goal(gathered(Id)), bel(workerActivity(idling)) then gather(Id).
 	% if we need to gather minerals and we're not doing anything start buildin a refinary'
 	if goal(refinaryBuild(Id,X,Y)),bel(assigned(1)) then build("Terran Refinery",X,Y).
+	%if your given the assignment  and have the goal barrack build
 	if goal(barrackBuild(X,Y)), bel(assigned(2)), not(bel(barrack)) then build('Terran Barracks',X,Y).
+	%if your given the assignment and have the goal to build a depot then build
 	if a-goal(depotBuild(X,Y)), bel(assigned(3)), not(bel(supplyMax1)) then build('Terran Supply Depot',X,Y ).
 }

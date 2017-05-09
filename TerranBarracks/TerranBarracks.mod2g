@@ -2,7 +2,7 @@ use TerranBarracks as actionspec.
 use TerranBarracks as knowledge.
 exit = never.
 
-
+%if train is believed then do action train marine
 module TerranBarracks {
-	if bel(trained) then train("Terran Marine") + delete(trained).
+	if bel(train) then train("Terran Marine") + delete(train).
 }

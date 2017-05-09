@@ -1,15 +1,18 @@
 use TerranBarracks as knowledge.
 
 module TerranBarracksEvent {
+	%friendly updating
 	forall bel(friendly(Type,Id,Conditions)), not(percept(friendly(Type,Id,Conditions))) do delete(friendly(Type,Id,Conditions)).	
 	forall percept(friendly(Type,Id,Conditions)), not(bel(friendly(Type,Id,Conditions))) do insert(friendly(Type,Id,Conditions)).
 	
+	%resources updating
 	if percept(resources(Mnew, Gnew, Csnew, Tsnew)), bel(resources(M, G, Cs, Ts)) 
 		then delete(resources(M, G, Cs, Ts)) + insert(resources(Mnew, Gnew, Csnew, Tsnew)).
 
+	%quesize updating
 	if percept(queueSize(NewSize)), bel(queueSize(Size))
 	  then delete(queueSize(Size)) + insert(queueSize(NewSize)).
-	  
-	if bel( queueSize(0), marinesAmount(Y), marinesMax(N), Y<N, resources(M, _, Cs, Ts), Cs \= Ts, cost(X), M>=X)
-	 then insert(trained).
+	%parameters neccesary for a marine to be build(when the quesize is 0 and marines amount is smaller then the max) 
+	if bel( queueSize(0), marinesAmount(Y), marinesMax(N), Y<N, resources(M, _, Cs, Ts), Cs \= Ts, marinesCost(A), M>=A)
+	 then insert(train).
 }

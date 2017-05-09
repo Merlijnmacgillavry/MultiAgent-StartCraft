@@ -9,6 +9,7 @@ define gather(Id) with
 define build(Type, X, Y)with
 	pre {true}
 	post {true}
+	%stop action
 define stop with
 	pre{true}
 	post{true}

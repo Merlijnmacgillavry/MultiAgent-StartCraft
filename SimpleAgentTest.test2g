@@ -1,7 +1,7 @@
 use SimpleAgentTerran as mas.
 use TerranCommandCenter.TerranCommandCenter as knowledge.
 use TerranCommandCenter.TerranCommandCenter as module.
-timeout=300. % 5 minutes; shorten this for quicker testing of earlier stars
+timeout=140. % 5 minutes; shorten this for quicker testing of earlier stars
 
 % This test performs checks to see if a star is (likely) obtained by the agent team.
 % A failure of a specific condition indicates which star you failed to achieve; 

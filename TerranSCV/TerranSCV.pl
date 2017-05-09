@@ -7,14 +7,13 @@
 	friendly/3,		%friendly percept handling
 	resources/4,		%amount of resources there are currently available
 	refinaryBuild/3,	% used as a goal to build a refinary
-	barrackBuild/2,
-	depotBuild/2,
-	barrack/0,
-	supply/1,
-	supplyMax1/0,
-	supplyMax2/0,
-	assigned/1,		%
-	gasHandler/0,
+	barrackBuild/2,		%barrack build goal
+	depotBuild/2,		%depot build goal
+	barrack/0,		%barrack boolean
+	supplyMax1/0,		%supplymax1 boolean
+	supplyMax2/0,		%supplymax2 boolean
+	assigned/1,		%assigned belief
+	gasHandler/0,		%gashandler boolean
 	vespeneGeyser/4,	% vespineGeyser IDs and amounts from the vespineGeyser
-	constructionSite/2.	%
+	constructionSite/2.	%construction site percept
 	

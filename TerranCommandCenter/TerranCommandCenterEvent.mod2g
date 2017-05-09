@@ -7,14 +7,14 @@ module TerranCommandCenterEvent {
 	forall percept(friendly(Type,Id,Conditions)), not(bel(friendly(Type,Id,Conditions))) do insert(friendly(Type,Id,Conditions)).
 
 	%update minerals
-	if percept(resources(Mnew, Gnew, Csnew, Tsnew)), bel(resources(M, G , Cs, Ts), resources(M, G, Cs, Ts) \= resources(Mnew, Gnew, Csnew, Tsnew))
-		then delete(resources(M, G , Cs, Ts)) + insert (resources(Mnew, Gnew, Csnew, Tsnew)).
+	if percept(resources(M1, G1, Cs1, Ts1)), bel(resources(M, G , Cs, Ts), resources(M, G, Cs, Ts) \= resources(M1, G1, Cs1, Ts1))
+		then delete(resources(M, G , Cs, Ts)) + insert (resources(M1, G1, Cs1, Ts1)).
 	%ypdate queusize
 	if percept(queueSize(A)), bel(queueSize(B)) 
 	then delete(queueSize(B)) + insert(queueSize(A)).
 	if bel(queueSize(0), scvAmount(Y), amountMax(N), Y<N, resources(M,_,Amount,Max), Amount\=Max, scvCost(A), M>=A) then insert(train).
 	
-	%message handling
+	%message handling for making terran barracks terran supply depots and a terran refinery
 	
 	if bel(resources(M,_,_,_),barrackCost(X), M>X), not(percept(friendly('Terran Barracks', _, _)))
 	then (terranSCV_0).send(assigned(2)).
@@ -25,6 +25,5 @@ module TerranCommandCenterEvent {
 	if bel(resources(M,_,_,_),supplyCost(X), M>X), percept(friendly('Terran Supply Depot',_,_))
 	then (terranSCV_2).send(assigned(4)).
 	if bel(resources(M,_,Amount,Max), M>100), not(percept(friendly('Terran Refinery'))) then (terranSCV).send(assigned(1)).
-	%if bel(resources(M,G,Amount,Max), G<100), percept(friendly('Terran Refinery')) then (terranSCV_5).send(assigned(5)).
-	%if bel(resources(M,G,Amount,Max), G<100), percept(friendly('Terran Refinery')) then (terranSCV_6).send(assigned(5)).
+	
 }
